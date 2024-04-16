@@ -3,6 +3,9 @@ package com.example.application.views;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.helloworld.HelloWorldView;
 import com.example.application.views.masterdetail.MasterDetailView;
+import com.example.application.views.treegrid.TreeGridRecursiveSelectionView;
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -14,6 +17,8 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -21,12 +26,26 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
  */
 public class MainLayout extends AppLayout {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     private H2 viewTitle;
 
     public MainLayout() {
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
         addHeaderContent();
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        logger.info("MainLayout.onDetach for UI {} isClosing {}", detachEvent.getUI().getUIId(),
+                detachEvent.getUI().isClosing());
+        super.onDetach(detachEvent);
     }
 
     private void addHeaderContent() {
@@ -55,6 +74,7 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
         nav.addItem(new SideNavItem("Master-Detail", MasterDetailView.class, LineAwesomeIcon.COLUMNS_SOLID.create()));
+        nav.addItem(new SideNavItem("Recursive Tree-Grid", TreeGridRecursiveSelectionView.class, LineAwesomeIcon.TREE_SOLID.create()));
 
         return nav;
     }

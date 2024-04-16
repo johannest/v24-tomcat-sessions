@@ -18,10 +18,12 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -80,6 +82,7 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
         grid.addColumn("dateOfBirth").setAutoWidth(true);
         grid.addColumn("occupation").setAutoWidth(true);
         grid.addColumn("role").setAutoWidth(true);
+        grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         LitRenderer<SamplePerson> importantRenderer = LitRenderer.<SamplePerson>of(
                 "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
                 .withProperty("icon", important -> important.isImportant() ? "check" : "minus").withProperty("color",
@@ -136,6 +139,26 @@ public class MasterDetailView extends Div implements BeforeEnterObserver {
                 Notification.show("Failed to update the data. Check again that all values are valid");
             }
         });
+    }
+
+    private static ComponentRenderer<PersonDetailsFormLayout, SamplePerson> createPersonDetailsRenderer() {
+        return new ComponentRenderer<>(PersonDetailsFormLayout::new,
+                PersonDetailsFormLayout::setPerson);
+    }
+
+    private static class PersonDetailsFormLayout extends VerticalLayout {
+        private final TextField emailField = new TextField("Email address");
+        private final TextField phoneField = new TextField("Phone number");
+
+        private SplitLayout splitLayout = new SplitLayout(emailField, phoneField);
+        public PersonDetailsFormLayout() {
+            add(splitLayout);
+        }
+
+        public void setPerson(SamplePerson person) {
+            emailField.setValue(person.getEmail());
+            phoneField.setValue(person.getPhone());
+        }
     }
 
     @Override
