@@ -5,19 +5,19 @@
     <!-- Project from https://start.vaadin.com/project/5767bc5c-c39e-46c4-acbf-32988680a672 -->
     <groupId>com.example.application</groupId>
     <artifactId>v243-tomcat-sessions</artifactId>
-    <name>v243grid</name>
+    <name>v243-tomcat-sessions</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
         <java.version>17</java.version>
-        <vaadin.version>24.3.3</vaadin.version>
+        <vaadin.version>24.3.9</vaadin.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.4</version>
     </parent>
 
     <repositories>

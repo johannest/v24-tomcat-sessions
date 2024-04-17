@@ -6,6 +6,7 @@
         version = "5.0"
         metadata-complete = "false" >
 
+    <!-- Application specific session timeout configuration in minutes -->
     <session-config>
         <session-timeout>2</session-timeout>
     </session-config>

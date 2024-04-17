@@ -34,6 +34,8 @@ public class InitListener implements VaadinServiceInitListener {
                 messages.setSessionExpiredCaption("Session expired");
                 messages.setSessionExpiredMessage("Take note of any unsaved data, and click here or press ESC key to continue.");
                 messages.setSessionExpiredURL("https://vaadin.com");
+
+                // if set to false the app will be automatically redirected to the URL above if session expiration happens
                 messages.setSessionExpiredNotificationEnabled(true);
                 return messages;
             }
